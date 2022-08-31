@@ -1,0 +1,33 @@
+{
+    "name": "nanoleafjs",
+    "version": "1.0.0",
+    "description": "JS Wrapper for the Nanoleaf Open API",
+    "main": "dist/index.js",
+    "types": "dist/",
+    "scripts": {
+        "build": "npx tsc",
+        "watch": "npx tsc -w"
+    },
+    "keywords": [
+        "nanoleaf",
+        "lights",
+        "api",
+        "typescript"
+    ],
+    "author": "minefled",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/minefled/nanoleafjs/nanoleafjs.git"
+    },
+    "bugs": {
+        "url": "https://github.com/minefled/nanoleafjs/issues"
+    },
+    "homepage": "https://github.com/minefled/nanoleafjs#readme",
+    "dependencies": {
+        "@types/node": "^18.7.14",
+        "@types/node-fetch": "^2.6.2",
+        "node-fetch": "^2.6.7",
+        "typescript": "^4.8.2"
+    }
+}
