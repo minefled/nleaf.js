@@ -26,11 +26,16 @@ export interface NanoleafClientOptions {
     /**
      * Options for the Touch Data Stream
      */
-    touch?: {
-        /** Determines, whether or not the Touch Data Stream should be enabled or not; Default: false */
-        enabled: boolean;
+    touch?: NanoleafTouchOptions
+}
 
-        /** Port of the UDP Server receiving the Touch Data stream; Default: 35508 */
-        port?: number;
-    }
+/**
+ * Options for the Touch Data Stream
+ */
+export interface NanoleafTouchOptions {
+    /** Determines, whether or not the Touch Data Stream should be enabled or not; Default: false */
+    enabled: boolean;
+
+    /** Port of the UDP Server receiving the Touch Data stream; Default: 35508 */
+    port?: number;
 }

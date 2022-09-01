@@ -2,18 +2,35 @@ import fetch from "node-fetch";
 
 import { constrain } from "./utils";
 
-import type { NanoleafClientOptions } from "./types/NanoleafClientOptions";
-import type { NanoleafPanelInfo } from "./types/NanoleafPanelInfo";
-import type { NanoleafState } from "./types/NanoleafState";
-import { NanoleafPanelLayout } from "./types/NanoleafPanelLayout";
+import { NanoleafTouchServer } from "./NanoleafTouchServer";
 
+import type { NanoleafClientOptions }   from "./types/NanoleafClientOptions";
+import type { NanoleafPanelInfo }       from "./types/NanoleafPanelInfo";
+import type { NanoleafState }           from "./types/NanoleafState";
+import type { NanoleafPanelLayout }     from "./types/NanoleafPanelLayout";
+import type {
+    Event, EventCallback, EventType
+} from "./types/Event";
+
+/**
+ * Represents a Nanoleaf Device
+ */
 export class Nanoleaf {
 
     /** Options for the Client */
     public options:NanoleafClientOptions;
 
+    /** Array of all registered event callbacks */
+    public callbacks:Array< EventCallback > = [];
+
+    private touch?:NanoleafTouchServer;
+
     constructor(options:NanoleafClientOptions) {
         this.options = Nanoleaf.fillOptions(options);
+
+        if(options.touch?.enabled === true) {
+            this.touch = new NanoleafTouchServer(this);
+        }
     }
 
     /**
@@ -34,6 +51,36 @@ export class Nanoleaf {
             }
         };
     }
+
+    /* [==================================] */
+    /* [===========]  Events  [===========] */
+    /* [==================================] */
+
+    /**
+     * Registers a new event callback with a specified event type and a callback function
+     * that will be called once an event with the same type occurs
+     * 
+     * @param type 
+     * @param callback 
+     */
+    public on(type:EventType, callback:(e:Event) => void) {
+        this.callbacks.push({
+            eventType: type,
+            callback
+        });
+    }
+
+    public dispatchEvent(e:Event) {
+        //// Call event callbacks ////
+        for(var ec of this.callbacks) {
+            if(ec.eventType == e.type) ec.callback(e);
+        }
+    }
+
+
+    /* [==================================] */
+    /* [===========]  API  [===========] */
+    /* [==================================] */
 
     /**
      * Returns a formatted api url for a path
