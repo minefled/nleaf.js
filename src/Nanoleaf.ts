@@ -11,6 +11,7 @@ import type { NanoleafPanelLayout }     from "./types/NanoleafPanelLayout";
 import type {
     Event, EventCallback, EventType
 } from "./types/Event";
+import { EffectManager } from "./effects/EffectManager";
 
 /**
  * Represents a Nanoleaf Device
@@ -24,9 +25,15 @@ export class Nanoleaf {
     public callbacks:Array< EventCallback > = [];
 
     private touch?:NanoleafTouchServer;
+    public effects:EffectManager;
+
+    public ctMin:number = 1500;
+    public ctMax:number = 6500;
 
     constructor(options:NanoleafClientOptions) {
         this.options = Nanoleaf.fillOptions(options);
+
+        this.effects = new EffectManager(this);
 
         if(options.touch?.enabled === true) {
             this.touch = new NanoleafTouchServer(this);
@@ -101,7 +108,7 @@ export class Nanoleaf {
      * @example
      *      await this._get("state/on")    // -> { value: true }
      */
-    private async _get(path:string):Promise<{[key:string]:any} | null>
+    public async _get(path:string):Promise<{[key:string]:any} | null>
     {
         let response = await fetch( this.getURL(path) );
 
@@ -120,7 +127,7 @@ export class Nanoleaf {
      * @example
      *      await this._put("state/on", {on: { value: true }})
      */
-    private async _put(path:string, body:{[key:string]:any}, headers:{[key:string]:string}={}): Promise<{[key:string]:any} | null>
+    public async _put(path:string, body:{[key:string]:any}, headers:{[key:string]:string}={}): Promise<{[key:string]:any} | null>
     {
         let response = await fetch( this.getURL(path), {
             method: "PUT",
@@ -130,6 +137,8 @@ export class Nanoleaf {
             },
             body: JSON.stringify(body)
         } );
+
+        console.log(response);
 
         try {
             let data = await response.json();
@@ -220,6 +229,17 @@ export class Nanoleaf {
     public async globalOrientation():Promise<number | null> {
         let response = await this._get("panelLayout/globalOrientation");
         return response.value || null;
+    }
+
+    /**
+     * Sets the Global Orientation of the layout
+     */
+    public async setGlobalOrientation( orientation:number ) {
+        orientation = constrain(orientation, 0, 360);
+
+        await this._put("panelLayout", {
+            globalOrientation: orientation
+        });
     }
 
     /**
