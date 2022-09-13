@@ -9,6 +9,5 @@ A Wrapper for the Nanoleaf Open API with Typescript support
 - [x] General Panel Info and State
 - [x] Effects Control *(-- NEEDS TESTING --)*
 - [x] Real-Time Touch Data
-- [ ] Individual Panel Control
 - [ ] Events
-- [ ] Discovery
+- [x] Discovery

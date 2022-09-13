@@ -28,6 +28,10 @@
         "@types/node": "^18.7.14",
         "@types/node-fetch": "^2.6.2",
         "node-fetch": "^2.6.7",
+        "node-ssdp": "^4.0.1",
         "typescript": "^4.8.2"
+    },
+    "devDependencies": {
+        "@types/node-ssdp": "^4.0.1"
     }
 }

@@ -2,7 +2,9 @@ import fetch from "node-fetch";
 
 import { constrain } from "./utils";
 
-import { NanoleafTouchServer } from "./NanoleafTouchServer";
+import { NanoleafTouchServer }  from "./NanoleafTouchServer";
+import { EffectManager }        from "./effects/EffectManager";
+import { NanoleafDiscovery }    from "./discovery/NanoleafDiscovery";
 
 import type { NanoleafClientOptions }   from "./types/NanoleafClientOptions";
 import type { NanoleafPanelInfo }       from "./types/NanoleafPanelInfo";
@@ -11,7 +13,6 @@ import type { NanoleafPanelLayout }     from "./types/NanoleafPanelLayout";
 import type {
     Event, EventCallback, EventType
 } from "./types/Event";
-import { EffectManager } from "./effects/EffectManager";
 
 /**
  * Represents a Nanoleaf Device
@@ -24,8 +25,10 @@ export class Nanoleaf {
     /** Array of all registered event callbacks */
     public callbacks:Array< EventCallback > = [];
 
-    private touch?:NanoleafTouchServer;
-    public effects:EffectManager;
+    private touch?:     NanoleafTouchServer;
+    public effects:     EffectManager;
+
+    public static discovery: NanoleafDiscovery = new NanoleafDiscovery();
 
     public ctMin:number = 1500;
     public ctMax:number = 6500;
@@ -33,7 +36,7 @@ export class Nanoleaf {
     constructor(options:NanoleafClientOptions) {
         this.options = Nanoleaf.fillOptions(options);
 
-        this.effects = new EffectManager(this);
+        this.effects   = new EffectManager(this);
 
         if(options.touch?.enabled === true) {
             this.touch = new NanoleafTouchServer(this);
@@ -137,8 +140,6 @@ export class Nanoleaf {
             },
             body: JSON.stringify(body)
         } );
-
-        console.log(response);
 
         try {
             let data = await response.json();
