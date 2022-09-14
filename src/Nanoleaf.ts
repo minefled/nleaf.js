@@ -395,4 +395,23 @@ export class Nanoleaf {
             }
         });
     }
+
+    /**
+     * Sets the HSB color for all the panels
+     * 
+     * @param hue Hue of the color
+     * @param sat Saturation of the color
+     * @param brightness Brightness of the color
+     */
+    public async setHSB( hue:number, sat:number, brightness:number) {
+        hue         = constrain(hue, 0, 360);
+        sat         = constrain(hue, 0, 100);
+        brightness  = constrain(brightness, 0, 100);
+
+        await this._put("state", {
+            hue:        { value: hue },
+            sat:        { value: sat },
+            brightness: { value: brightness }
+        });
+    }
 }
