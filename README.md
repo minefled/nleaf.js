@@ -78,7 +78,7 @@ device.on("touch", (event) => {
 ## 3 Client Options
 
 Option | Type | Optional | Default | Description
-- | - | - | - | -
+--- | --- | --- | --- | ---
 host | *string* | no | - | IP Address of the Device
 accessToken | *string* | no | - | Access Token to the Device
 port | *number* | yes | 16021 | API Port
