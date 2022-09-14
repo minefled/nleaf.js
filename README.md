@@ -1,13 +1,19 @@
-# nanoleafjs
+# nleaf.js
 
 A Wrapper for the Nanoleaf Open API with Typescript support
 
 **NOTE:** This has only been tested on my Nanoleaf Shapes and i cannot confirm this will work on other devices as well
 
+## Install
+
+```bash
+npm i nleaf.js
+```
+
 ## 1 Features
 - [x] Authorization
 - [x] General Panel Info and State
-- [x] Effects Control *(-- NEEDS TESTING --)*
+- [x] Effects Control *(-- NEEDS MORE TESTING --)*
 - [x] Real-Time Touch Data
 - [ ] Events
 - [x] Discovery
@@ -18,7 +24,7 @@ A Wrapper for the Nanoleaf Open API with Typescript support
 
 ```typescript
 
-import { Nanoleaf } from "nanoleafjs";
+import { Nanoleaf } from "nleaf.js";
 
 const device = new Nanoleaf({
     host: "192.168.1.100",
@@ -41,7 +47,7 @@ const device = new Nanoleaf({
 
 ```typescript
 
-import { Nanoleaf } from "nanoleafjs";
+import { Nanoleaf } from "nleaf.js";
 
 // This will be called when a device is discovered
 Nanoleaf.discovery.onDiscovered = function(res) {
@@ -59,7 +65,7 @@ Nanoleaf.discovery.start();
 This example shows how to get live touch data from the panels
 
 ```typescript
-import { Nanoleaf } from "nanoleafjs";
+import { Nanoleaf } from "nleaf.js";
 
 const device = new Nanoleaf({
     host: "192.168.1.100",
@@ -73,6 +79,15 @@ const device = new Nanoleaf({
 device.on("touch", (event) => {
     console.log("Touch Event:", event);
 })
+```
+
+### 2.4 Authorization
+
+```typescript
+import { Nanoleaf } from "nleaf.js";
+
+let token = Nanoleaf.auth.getToken("http://192.168.1.100/");
+console.log(token);
 ```
 
 ## 3 Client Options

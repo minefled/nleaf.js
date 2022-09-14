@@ -1,6 +1,6 @@
 {
-    "name": "nanoleafjs",
-    "version": "1.0.0",
+    "name": "nleaf.js",
+    "version": "1.0.1",
     "description": "JS Wrapper for the Nanoleaf Open API",
     "main": "dist/index.js",
     "types": "dist/",
