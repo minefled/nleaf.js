@@ -10,6 +10,7 @@ import type { NanoleafClientOptions }   from "./types/NanoleafClientOptions";
 import type { NanoleafPanelInfo }       from "./types/NanoleafPanelInfo";
 import type { NanoleafState }           from "./types/NanoleafState";
 import type { NanoleafPanelLayout }     from "./types/NanoleafPanelLayout";
+import { NanoleafAuthorization }        from "./auth/NanoleafAuthorization";
 import type {
     Event, EventCallback, EventType
 } from "./types/Event";
@@ -28,7 +29,8 @@ export class Nanoleaf {
     private touch?:     NanoleafTouchServer;
     public effects:     EffectManager;
 
-    public static discovery: NanoleafDiscovery = new NanoleafDiscovery();
+    public static discovery: NanoleafDiscovery  = new NanoleafDiscovery();
+    public static auth                          = NanoleafAuthorization;
 
     public ctMin:number = 1500;
     public ctMax:number = 6500;
